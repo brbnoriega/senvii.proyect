@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 //import Header from "./Header";
 
 
@@ -7,18 +7,20 @@ export default function Register() {
     const { register, handleSubmit } = useForm();
     const [data, setData] = useState("");
 
+    //see what happen with the 
+
     return (
         <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
             <h3>Completa los datos de tu empresa</h3>
             <label>
                 Nombre de tu empresa
                 <input {...register("companyName")} placeholder="Nombre de la empresa" />
-            </label>
-            <p>Tipo de empresa</p>
-            <input type="radio" id="publica" name="type" value="publica" />
-            <label for="html">Publica</label><br />
-            <input type="radio" id="privada" name="type" value="privada" />
-            <label for="css">Privada</label><br />
+            </label>          
+            <p>Tipo de empresa</p> 
+            <input {...register("companyType")} type="radio" id="publica" name="type" value="publica" checked/>
+            Publica<br />
+            <input {...register("companyType")} type="radio" id="privada" name="type" value="privada" />
+            Privada<br />
             <label>
                 Actividad que realiza
                 <input {...register("Activity")} placeholder="Actividad que realiza" />
@@ -35,12 +37,28 @@ export default function Register() {
                 Nombre del responsable
                 <input {...register("namePersonInCharge")} placeholder="Nombre del responsable" />
             </label><br />
-            <select {...register("category", { required: true })}>
+            <label>
+                Cargo en la empresa
+                <input {...register("positionInTheCompany")} placeholder="Cargo en la empresa" />
+            </label><br />
+            <label>
+                Ubicacion de la via
+                <input {...register("locationOfTheRoad")} placeholder="Ubicacion de la via" />
+            </label><br />
+            <label>
+                Numero de telefono celular
+                <input {...register("cellPhone")} placeholder="Telefono celular" />
+            </label><br />
+            <label>
+                Correo corporativo
+                <input {...register("corporateMail")} placeholder="Correo corporativo" />
+            </label><br />
+            {/* <select {...register("category", { required: true })}>
                 <option value="">Select...</option>
                 <option value="A">Option A</option>
                 <option value="B">Option B</option>
-            </select><br />
-            <textarea {...register("aboutYou")} placeholder="About you" />
+            </select><br /> */}
+           {/*  <textarea {...register("aboutYou")} placeholder="About you" /> */}
             <p>{data}</p>
             <input type="submit" />
         </form>
