@@ -14,6 +14,7 @@ module.exports = (sequelize) => {
       institutionName: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
       },
       phoneNumber: {
         type: DataTypes.STRING,
@@ -21,11 +22,15 @@ module.exports = (sequelize) => {
       },
       address: {
         type: DataTypes.JSON({
-          province: {
+          country: {
             type: DataTypes.STRING,
             allowNull: false,
           },
-          region: {
+          state: {
+            type: DataTypes.STRING,
+            allowNull: false,
+          },
+          city: {
             type: DataTypes.STRING,
             allowNull: false,
           },
