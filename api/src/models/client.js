@@ -11,6 +11,7 @@ module.exports = (sequelize) => {
         userName: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
         password: {
             type: DataTypes.STRING,
@@ -23,6 +24,11 @@ module.exports = (sequelize) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            unique: true
         },
+        image: {
+            type: DataTypes.JSON,
+            allowNull: false
+        }
         }, { timestamps: true }); // to create createdAt/updatedAt
 };
