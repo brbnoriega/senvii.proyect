@@ -73,10 +73,8 @@ const { Client, Institution } = sequelize.models;
 //Example
 /* Pokemon.belongsToMany(Type, { through: "type_pokemon", timestamps: false });
 Type.belongsToMany(Pokemon, { through: "type_pokemon", timestamps: false }); */
-Client.belongsToMany(Institution, {
-  through: "client_institution",
-  timestamps: true,
-});
+Institution.hasMany(Client);
+Client.belongsTo(Institution);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
