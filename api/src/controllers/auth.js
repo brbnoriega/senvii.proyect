@@ -1,5 +1,6 @@
 const { Client, Institution } = require("../db");
 const bcrypt = require("bcrypt");
+const { createToken, validateToken } = require("../utils/JWT");
 
 const postLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -7,18 +8,27 @@ const postLogin = async (req, res) => {
   if (!email || !password)
     return res.status(400).json({ error: "Not Enough Data" });
 
-  const existingClient = await Client.findOne({ where: { email } });
+  const existingUser = await Client.findOne({ where: { email } });
 
-  if (!existingClient)
+  if (!existingUser)
     return res.status(400).json({ error: "User Doesn't Exist" });
 
-  const dbPassword = existingClient.dataValues.password;
+  const dbPassword = existingUser.dataValues.password;
+  // verify hashed password
   const match = await bcrypt.compare(password, dbPassword).then((res) => res);
 
   if (!match)
     return res
       .status(400)
       .json({ error: "Wrong Username and Password Combination" });
+
+  const accessToken = createToken(existingUser);
+
+  res.cookie("access-token", accessToken, {
+    httpOnly: true,
+    secure: false,
+    maxAge: 60 * 60 * 24 * 30 * 1000,
+  });
 
   res.json("LOGGED IN");
 };
@@ -48,18 +58,21 @@ const postRegister = async (req, res) => {
   )
     return res.status(400).json({ error: "Not Enough Data" });
 
-  const existingClient = await Client.findOne({ where: { email } });
-  if (existingClient)
+  const existingUser = await Client.findOne({ where: { email } });
+  if (existingUser)
     return res.status(400).json({ error: "User Already Exist" });
 
+  // Hash password
   bcrypt
     .hash(password, 10)
     .then(async (hash) => {
+      // find or create an institution
       const [institution, created] = await Institution.findOrCreate({
         where: { institutionName },
         defaults: { phoneNumber, address, businessActivity, entity },
       });
 
+      // Create user
       const client = Client.create({
         userName,
         password: hash,
@@ -76,7 +89,12 @@ const postRegister = async (req, res) => {
     });
 };
 
+const getProfile = (req, res) => {
+  res.json("You are in!");
+};
+
 module.exports = {
   postLogin,
   postRegister,
+  getProfile,
 };
