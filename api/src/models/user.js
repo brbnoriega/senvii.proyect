@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
         unique: true,
       },
       identificationNumber: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: false,
         unique: true,
       },

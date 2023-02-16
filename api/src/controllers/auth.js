@@ -36,9 +36,11 @@ const postLogin = async (req, res) => {
 const postRegister = async (req, res) => {
   const {
     userName,
+    identificationNumber,
+    email,
     password,
     role,
-    email,
+    image,
     institutionName,
     phoneNumber,
     address,
@@ -49,6 +51,7 @@ const postRegister = async (req, res) => {
   if (
     !userName ||
     !password ||
+    !identificationNumber ||
     !role ||
     !institutionName ||
     !phoneNumber ||
@@ -75,9 +78,11 @@ const postRegister = async (req, res) => {
       // Create user
       const user = User.create({
         userName,
+        identificationNumber,
         password: hash,
-        role,
         email,
+        role,
+        image,
         institutionId: institution.id,
       });
     })
