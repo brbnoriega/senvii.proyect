@@ -2,8 +2,8 @@ const { Router } = require("express");
 
 const router = new Router();
 
-const { getClient } = require("../controllers/client");
+const { getUser } = require("../controllers/user");
 
-router.get("/", getClient);
+router.get("/", getUser);
 
 module.exports = router;

@@ -11,10 +11,14 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
+      entity: {
+        type: DataTypes.ENUM(["Privado", "Público"]),
+        allowNull: false,
+      },
       institutionName: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
       phoneNumber: {
         type: DataTypes.STRING,
@@ -43,10 +47,6 @@ module.exports = (sequelize) => {
       },
       businessActivity: {
         type: DataTypes.STRING,
-        allowNull: false,
-      },
-      entity: {
-        type: DataTypes.ENUM(["Privado", "Público"]),
         allowNull: false,
       },
     },
