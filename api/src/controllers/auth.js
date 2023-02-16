@@ -1,4 +1,4 @@
-const { Client, Institution } = require("../db");
+const { User, Institution } = require("../db");
 const bcrypt = require("bcrypt");
 const { createToken, validateToken } = require("../utils/JWT");
 
@@ -8,7 +8,7 @@ const postLogin = async (req, res) => {
   if (!email || !password)
     return res.status(400).json({ error: "Not Enough Data" });
 
-  const existingUser = await Client.findOne({ where: { email } });
+  const existingUser = await User.findOne({ where: { email } });
 
   if (!existingUser)
     return res.status(400).json({ error: "User Doesn't Exist" });
@@ -20,7 +20,7 @@ const postLogin = async (req, res) => {
   if (!match)
     return res
       .status(400)
-      .json({ error: "Wrong Username and Password Combination" });
+      .json({ error: "Wrong Username or Password Combination" });
 
   const accessToken = createToken(existingUser);
 
@@ -58,7 +58,7 @@ const postRegister = async (req, res) => {
   )
     return res.status(400).json({ error: "Not Enough Data" });
 
-  const existingUser = await Client.findOne({ where: { email } });
+  const existingUser = await User.findOne({ where: { email } });
   if (existingUser)
     return res.status(400).json({ error: "User Already Exist" });
 
@@ -73,7 +73,7 @@ const postRegister = async (req, res) => {
       });
 
       // Create user
-      const client = Client.create({
+      const user = User.create({
         userName,
         password: hash,
         role,

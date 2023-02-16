@@ -3,9 +3,9 @@ require("dotenv").config();
 
 const createToken = (user) => {
   const { id, userName } = user;
-  const accesToken = sign({ userName, id }, process.env.JWT_SECRET);
+  const accessToken = sign({ userName, id }, process.env.JWT_SECRET);
 
-  return accesToken;
+  return accessToken;
 };
 
 const validateToken = (req, res, next) => {
