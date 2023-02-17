@@ -17,7 +17,10 @@ const postLogin = async (req, res) => {
   const existingUser = await User.findOne({ where: { email } });
 
   if (!existingUser)
-    return res.status(400).json({ error: "User Doesn't Exist" });
+    return res.status(400).json({ error: "Usuario no existente" });
+
+  if (!existingUser.verified)
+    return res.status(400).json({ error: "Usuario no verificado" });
 
   const dbPassword = existingUser.dataValues.password;
   // verify hashed password
@@ -26,7 +29,7 @@ const postLogin = async (req, res) => {
   if (!match)
     return res
       .status(400)
-      .json({ error: "Wrong Username or Password Combination" });
+      .json({ error: "Algún dato proporcionado es incorrecto" });
 
   const accessToken = createToken(existingUser);
 
