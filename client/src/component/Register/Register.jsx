@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { Box, Input, Switch, Stack } from '@chakra-ui/react'
 //import Header from "./Header";
 
 
@@ -11,21 +12,56 @@ export default function Register() {
 
     return (
         <>
-            <h2>
-                Recopilación de datos
-            </h2>
+
+            <Box h='20vh' bg='gray' bgRepeat='no-repeat' bgSize='cover'>
+                <Box>Completa tus</Box>
+                <Box>datos personales</Box>
+            </Box>
+
             <form onSubmit={handleSubmit((data) => setData(JSON.stringify(data)))}>
-                <h3>Completa los datos de tu empresa:</h3>
                 <label>
-                    Nombre de tu empresa:
-                    <input {...register("companyName")} placeholder="Nombre de la empresa" />
+                    Nombres y apellido:
+                    <Input {...register("nameAndLastname")} placeholder='' />
                 </label>
-                <p>Tipo de empresa:</p>
-                <input {...register("companyType")} type="radio" id="publica" name="type" value="publica" checked />
-                Publica<br />
-                <input {...register("companyType")} type="radio" id="privada" name="type" value="privada" />
-                Privada<br />
                 <label>
+                    Numero de identificacion:
+                    <Input {...register("idNumber")} placeholder='' />
+                </label>
+                <label>
+                    Pais de origen:
+                    <Input {...register("country")} placeholder='' />
+                </label>
+                <Stack align='center' direction='row'>
+                    <Box>Pública</Box>
+                    <Switch size='lg' />
+                    <Box>Privada</Box>
+                </Stack>
+                <label>
+                    Nombre de su entidad:
+                    <Input {...register("entityName")} placeholder='' />
+                </label>
+                <label>
+                    Numero de telefono celular:
+                    <Input {...register("cellphoneNumber")} placeholder='' />
+                </label>
+                <label>
+                    E-mail:
+                    <Input {...register("email")} placeholder='' />
+                </label>
+
+                <p>{data}</p>
+                <input type="submit" value='Registrar' />
+            </form>
+        </>
+    );
+}
+
+
+
+
+
+/* 
+ <label>
                     Actividad que realiza:
                     <input {...register("Activity")} placeholder="Actividad que realiza" />
                 </label><br />
@@ -58,9 +94,4 @@ export default function Register() {
                     <input {...register("corporateMail")} placeholder="Correo corporativo" type="email" name="email" />
                 </label><br />
 
-                <p>{data}</p>
-                <input type="submit" value='Registrar' />
-            </form>
-        </>
-    );
-}
+*/

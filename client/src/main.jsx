@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
 
-//import Register from './component/Register/Register'
+import Register from './component/Register/Register'
 //import SelectOperation from './component/SelectOperation/SelectOperation'
 //import WelcomeBot from './component/WelcomeBot/WelcomeBot'
 
@@ -10,7 +10,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ChakraProvider>
     <React.StrictMode>
-      {/*<Register />*/}
+      <Register />
       {/* <SelectOperation /> */}
       {/* <WelcomeBot /> */}
     </React.StrictMode>
