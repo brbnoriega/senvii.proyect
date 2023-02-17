@@ -16,10 +16,38 @@ const validateToken = (req, res, next) => {
 
   try {
     const validToken = verify(accessToken, process.env.JWT_SECRET);
+    console.log("🚀 ~ file: JWT.js:19 ~ validateToken ~ validToken", validToken)
     if (validToken) return next();
   } catch (error) {
     return res.status(400).json({ error });
   }
 };
 
-module.exports = { createToken, validateToken };
+const createEmailToken = (email, code) => {
+  const token = sign(
+    {
+      email,
+      code,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  return token;
+};
+
+const verifyEmailToken = (token) => {
+  const data = verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) return null;
+    return decoded;
+  });
+
+  return data;
+};
+
+module.exports = {
+  createToken,
+  createEmailToken,
+  validateToken,
+  verifyEmailToken,
+};
