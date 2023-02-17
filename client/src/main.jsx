@@ -18,3 +18,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   ,
 )
  //chakra installed
+ console.log('hola')
