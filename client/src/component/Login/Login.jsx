@@ -8,7 +8,11 @@ const Login = () => {
   return (
     <div>
       <div id={s.textStyle}>
-        <img src="../src/component/Login/icon_senvii.png" alt="senvii" id={s.img}/>
+        <img
+          src="../src/component/Login/icon_senvii.png"
+          alt="senvii"
+          id={s.img}
+        />
         <h1>senvii</h1>
         <span>Tu consultor vial inteligente</span>
       </div>
@@ -24,15 +28,15 @@ const Login = () => {
         <div id={s.textFieldStyle}>
           <TextField
             id="outlined-multiline-flexible"
-            label="Multiline"
+            label="Email"
             multiline
             maxRows={4}
           />
           <br />
           <TextField
             id="outlined-textarea"
-            label="Multiline Placeholder"
-            placeholder="Placeholder"
+            label="Contraseña"
+            placeholder="Password"
             multiline
           />
         </div>
@@ -40,7 +44,12 @@ const Login = () => {
       <div className={s.spanStyle}>
         <link rel="stylesheet" href="" />
         <span>¿Olvidaste tu contraseña? Click aquí</span> <br />
-        <span>¿No tenes cuenta? Regístrate aquí</span>
+        <span>
+          ¿No tenes cuenta?{" "}
+          <Link to="">
+            Regístrate aquí{" "}
+          </Link>
+        </span>
       </div>
     </div>
   );
