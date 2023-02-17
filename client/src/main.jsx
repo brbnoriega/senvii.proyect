@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
-
+//import { theme } from './resources/theme/index.js'
 import Register from './component/Register/Register'
 //import SelectOperation from './component/SelectOperation/SelectOperation'
 //import WelcomeBot from './component/WelcomeBot/WelcomeBot'
