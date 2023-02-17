@@ -3,7 +3,13 @@ const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 // Env Variables
-/* const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = require('../config.js'); */
+const {
+  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_NAME,
+  DB_PORT,
+} = require("../config.js");
 
 let sequelize =
   process.env.NODE_ENV === "production"
@@ -59,7 +65,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const {} = sequelize.models;
+const { Client, Institution } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
@@ -67,6 +73,8 @@ const {} = sequelize.models;
 //Example
 /* Pokemon.belongsToMany(Type, { through: "type_pokemon", timestamps: false });
 Type.belongsToMany(Pokemon, { through: "type_pokemon", timestamps: false }); */
+Institution.hasMany(Client);
+Client.belongsTo(Institution);
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

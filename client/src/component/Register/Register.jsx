@@ -59,7 +59,7 @@ export default function Register() {
                 </label><br />
 
                 <p>{data}</p>
-                <input type="submit" value='Continuar' />
+                <input type="submit" value='Registrar' />
             </form>
         </>
     );
