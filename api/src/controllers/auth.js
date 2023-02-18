@@ -1,7 +1,13 @@
 const { User, Institution } = require("../db");
 const bcrypt = require("bcrypt");
-const { createToken, validateToken } = require("../utils/JWT");
+const {
+  createToken,
+  createEmailToken,
+  verifyEmailToken,
+} = require("../utils/JWT");
+const { sendEmail } = require("../utils/mail.config");
 
+// LOGIN
 const postLogin = async (req, res) => {
   const { email, password } = req.body;
 
@@ -33,6 +39,7 @@ const postLogin = async (req, res) => {
   res.json("LOGGED IN");
 };
 
+// REGISTER
 const postRegister = async (req, res) => {
   const {
     userName,
@@ -62,7 +69,11 @@ const postRegister = async (req, res) => {
     return res.status(400).json({ error: "Not Enough Data" });
 
   const existingUser = await User.findOne({ where: { email } });
-  if (existingUser)
+  const existingIdentification = await User.findOne({
+    where: { identificationNumber },
+  });
+
+  if (existingUser || existingIdentification)
     return res.status(400).json({ error: "User Already Exist" });
 
   // Hash password
@@ -76,7 +87,7 @@ const postRegister = async (req, res) => {
       });
 
       // Create user
-      const user = User.create({
+      const user = await User.create({
         userName,
         identificationNumber,
         password: hash,
@@ -85,13 +96,57 @@ const postRegister = async (req, res) => {
         image,
         institutionId: institution.id,
       });
+      console.log("🚀 ~ file: auth.js:99 ~ .then ~ user", user);
+
+      // Create email token
+      const emailToken = createEmailToken(email, user.dataValues.id);
+      console.log("🚀 ~ file: auth.js:102 ~ .then ~ emailToken", emailToken);
+
+      // Send email
+      const testEmail = await sendEmail(email, emailToken);
     })
     .then(() => {
-      res.json("Client Registered");
+      res.json({ success: true });
     })
     .catch((err) => {
-      if (err) res.status(400).json(err);
+      return res.status(400).json({ err: "Something happened" });
     });
+};
+
+const confirmAccount = async (req, res) => {
+  try {
+    // get token
+    const { token } = req.params;
+    console.log("🚀 ~ file: auth.js:124 ~ confirmAccount ~ token", token);
+
+    // verify data
+    const data = await verifyEmailToken(token);
+    console.log("🚀 ~ file: auth.js:127 ~ confirmAccount ~ data", data);
+
+    if (data === null)
+      return res.json({ success: false, msg: "Error al obtener data" });
+
+    console.log("🚀 ~ file: auth.js:130 ~ confirmAccount ~ data", data);
+
+    const { email, code } = data;
+    // verify user
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) return res.json({ success: false, msg: "User doesn't exist" });
+
+    // verify code
+    if (code !== user.id)
+      return res.json({ success: false, msg: "Code ins't equal" });
+    console.log("🚀 ~ file: auth.js:139 ~ confirmAccount ~ code", code);
+
+    // update user
+    User.update({ verified: true }, { where: { email } });
+
+    // redirect
+    return res.json("VERIFIED");
+  } catch (error) {
+    return res.status(400).json({ err: "Something happened" });
+  }
 };
 
 const getProfile = (req, res) => {
@@ -102,4 +157,5 @@ module.exports = {
   postLogin,
   postRegister,
   getProfile,
+  confirmAccount,
 };
