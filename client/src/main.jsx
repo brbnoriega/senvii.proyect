@@ -6,13 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 //import SelectOperation from './component/SelectOperation/SelectOperation'
 import WelcomeBot from "./component/WelcomeBot/WelcomeBot";
 
-
-import React from "react";
-import ReactDOM from "react-dom/client";
 // import theme from "./theme";
-import { BrowserRouter } from "react-router-dom";
-
-
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

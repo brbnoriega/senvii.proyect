@@ -5,12 +5,12 @@ body {
 }
 
 #subtitleStyle,
-#textFieldStyle {
+#textFieldStyle{
   text-align: center;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
 }
-.spanStyle {
+.spanStyle{
   text-align: center;
   font-family: "Poppins", sans-serif;
   font-weight: bold;
@@ -23,6 +23,12 @@ body {
   font-weight: bold;
 }
 
+button{
+display: flex;
+align-items: center;
+justify-content: center;
+
+}
 #img{
     width: 40px;
     height: auto;
