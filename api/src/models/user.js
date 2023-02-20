@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
       },
       image: {
         type: DataTypes.JSON,
-        defaultValue: "", // url cloudinary
+        defaultValue: "https://res.cloudinary.com/djcc03pyc/image/upload/v1676672359/userPicture/defaultSenvii_pzzuqc.jpg", // url cloudinary
       },
       verified: {
         type: DataTypes.BOOLEAN,
