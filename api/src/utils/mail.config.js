@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 require("dotenv").config();
 
 const mail = {
-  user: "fabiansojoam09@gmail.com",
+  user: process.env.USER_EMAIL,
   password: process.env.PASSWORD_EMAIL,
 };
 
