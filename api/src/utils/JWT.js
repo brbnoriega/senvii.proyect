@@ -16,7 +16,6 @@ const validateToken = (req, res, next) => {
 
   try {
     const validToken = verify(accessToken, process.env.JWT_SECRET);
-    console.log("🚀 ~ file: JWT.js:19 ~ validateToken ~ validToken", validToken)
     if (validToken) return next();
   } catch (error) {
     return res.status(400).json({ error });
