@@ -45,7 +45,7 @@ const Login = () => {
         <link rel="stylesheet" href="" />
         <span>¿Olvidaste tu contraseña?  <Link to="">Click aquí</Link></span> <br />
         <span>
-          ¿No tenes cuenta? <Link to="/profile">Regístrate aquí</Link>
+          ¿No tenes cuenta? <Link to="/register">Regístrate aquí</Link>
         </span>
       </div>
     </div>
