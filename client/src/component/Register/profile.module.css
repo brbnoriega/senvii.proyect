@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap");
+
+body {
+  background-color: #f0f0f0;
+}
+
+#subtitleStyle,
+#textFieldStyle,
+FormControl{
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+}
+
+button{
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+  font-weight: bold;
+
+  position: absolute;
+width: 308px;
+height: 60px;
+left: 33px;
+top: 916px;
+}

@@ -30,22 +30,22 @@ const Login = () => {
             id="outlined-multiline-flexible"
             label="Email"
             multiline
-            maxRows={4}
+            minlength="20"
           />
           <br />
           <TextField
             id="outlined-textarea"
             label="Contraseña"
             placeholder="Password"
-            multiline
+            type= "Password"
           />
         </div>
       </Box>
       <div className={s.spanStyle}>
         <link rel="stylesheet" href="" />
-        <span>¿Olvidaste tu contraseña? Click aquí</span> <br />
+        <span>¿Olvidaste tu contraseña?  <Link to="">Click aquí</Link></span> <br />
         <span>
-          ¿No tenes cuenta? <Link to="">Regístrate aquí </Link>
+          ¿No tenes cuenta? <Link to="/register">Regístrate aquí</Link>
         </span>
       </div>
     </div>
