@@ -1,14 +1,14 @@
 const { sign, verify } = require("jsonwebtoken");
 require("dotenv").config();
 
-const createToken = (user) => {
+const createLoginToken = (user) => {
   const { id, userName } = user;
   const accessToken = sign({ userName, id }, process.env.JWT_SECRET);
 
   return accessToken;
 };
 
-const validateToken = (req, res, next) => {
+const validateLoginToken = (req, res, next) => {
   const accessToken = req.cookies["access-token"];
 
   if (!accessToken)
@@ -44,9 +44,22 @@ const verifyEmailToken = (token) => {
   return data;
 };
 
+const createForgotPasswordToken = (user) => {
+  const { password, id, email } = user;
+
+  const token = sign({ email, id }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+
+  const link = `http://localhost:3001/api/auth/forgot-password/${id}/${token}`;
+
+  return link;
+};
+
 module.exports = {
-  createToken,
+  createLoginToken,
   createEmailToken,
-  validateToken,
+  createForgotPasswordToken,
+  validateLoginToken,
   verifyEmailToken,
 };

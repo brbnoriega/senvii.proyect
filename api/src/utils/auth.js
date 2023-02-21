@@ -1,5 +1,16 @@
 const { User, Institution } = require("../db");
+const bcrypt = require("bcrypt");
+const { sign, verify } = require("jsonwebtoken");
 
+const {
+  createLoginToken,
+  createEmailToken,
+  verifyEmailToken,
+  createForgotPasswordToken,
+} = require("../utils/JWT");
+const { sendEmail } = require("../utils/mail.config");
+
+// FUNCTIONS
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -23,7 +34,7 @@ const login = async (req, res) => {
       .status(400)
       .json({ error: "Algún dato proporcionado es incorrecto" });
 
-  const accessToken = createToken(existingUser);
+  const accessToken = createLoginToken(existingUser);
 
   res.cookie("access-token", accessToken, {
     httpOnly: true,
@@ -136,4 +147,36 @@ const confirm = async (req, res) => {
   }
 };
 
-module.exports = { login, register, confirm };
+const profile = async (req, res) => {
+  const user = verify(req.cookies["access-token"], process.env.JWT_SECRET);
+  const { userName, id } = user;
+
+  res.json({ userName, id });
+};
+
+const forgotPasswordAuth = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const existingUser = await User.findOne({ where: { email } });
+
+    if (!existingUser)
+      return res.json({ success: false, msg: "User doesn't exist" });
+
+    const link = createForgotPasswordToken(existingUser);
+    res.json(link);
+  } catch (error) {
+    res.json(error);
+  }
+};
+
+const resetPasswordAuth = async (req, res) => {};
+
+module.exports = {
+  login,
+  register,
+  confirm,
+  profile,
+  forgotPasswordAuth,
+  resetPasswordAuth,
+};
